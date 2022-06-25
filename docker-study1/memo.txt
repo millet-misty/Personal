@@ -1,0 +1,23 @@
+docker login -u ユーザ名 -p ***
+
+docker image pull 名前空間/イメージ名[:タグ名]
+
+docker container run 名前空間/イメージ名[:タグ名]
+-d 
+-p 9000:8080
+
+[build]
+docker image build -t 名前空間/イメージ名[:タグ名] dockerfileのパス
+-f ファイル名
+
+(example)
+docker image build -t example/echo:latest ./docker-study1
+
+docker image ls
+
+docker image tag 名前空間/イメージ名[:OLDタグ名] 名前空間/イメージ名[:NEWタグ名]
+docker image push ユーザ名/イメージ名:タグ名
+(push前のtag替えは実質必須)
+
+docker-compose up -d
+docker-compose down
