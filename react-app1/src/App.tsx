@@ -2,35 +2,15 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-// SECTION21: 条件分岐とキャプション書き換え
-const LogOutButton = (props: { toggleIsLoggedIn: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
-  return <button onClick={props.toggleIsLoggedIn}>LOGOUT</button>;
-};
-const LogInButton = (props: { toggleIsLoggedIn: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
-  return <button onClick={props.toggleIsLoggedIn}>LOGIN</button>;
-};
-
-const LoginControl = () => {
-  //
-  const [isLoggedIn, setIsLoggedInState] = React.useState(false);
-
-  const toggleIsLoggedIn = () => {
-    setIsLoggedInState(!isLoggedIn);
-  };
-
-  if(isLoggedIn) {
-    return <LogOutButton toggleIsLoggedIn={toggleIsLoggedIn} />;
-  }
-  return <LogInButton toggleIsLoggedIn={toggleIsLoggedIn} />;
-};
+// SECTION26: コンポーネント指向
+import {CToggle} from "./CompToggle";
 
 // SECTION17: NameInputコンポーネント
 //{
   const NameInput = () => {
-      // stateの管理
+      // stateの管理(変数,変更関数名)
       const [name, setName] = React.useState("○○");
-
-      //
+      // イベントハンドラ
       const handleOnChange = (event: { target: { value: React.SetStateAction<string>; }; }) => setName(event.target.value);
 
       return (
@@ -56,9 +36,9 @@ const ListItems = () => {
 
 // SECTION 24:セレクトボックス
 const InputSelectBox = () => {
-  // 状態
+  // 状態(変数,変更関数名)
   const [selectedValue, setSelectedValue] = React.useState("HTML");
-
+  // イベントハンドラ
   const handleChenge = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedValue(e.target.value);
   };
@@ -82,17 +62,42 @@ const InputSelectBox = () => {
 }
 
 // SECTION 24:ラジオボタン
+const InputRadio = ()=>{
+  // 状態(変数,変更関数名)
+  const [checkedValue, setCheckedValue] = React.useState("red");
+  // イベントハンドラ
+  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) =>setCheckedValue(e.target.value);
 
-
-
+  return (
+    <div className="App">
+      <p>
+        現在選択されている値:<b>{checkedValue}</b>
+      </p>
+      <label>
+        <input type="radio" value="red" onChange={handleChange} checked={checkedValue==="red"} /> red
+      </label>
+      <label>
+        <input type="radio" value="blue" onChange={handleChange} checked={checkedValue==="blue"} /> blue
+      </label>
+      <label>
+        <input type="radio" value="green" onChange={handleChange} checked={checkedValue==="green"} /> green
+      </label>
+    </div>
+  );
+}
 
 // MAIN App
 function App() {
+  // トグルのやつ
+  const [isLoggedIn, setIsLoggedInState] = React.useState(false);  // 状態(変数,変更関数名)
+  const toggleIsLoggedIn = () => setIsLoggedInState(!isLoggedIn);  // イベントハンドラ
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-      <LoginControl />
+      <InputRadio />
+      <CToggle isLoggedIn={isLoggedIn} toggleIsLoggedIn={toggleIsLoggedIn} />
       <p/>
       <NameInput />
       <InputSelectBox />
