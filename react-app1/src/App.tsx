@@ -2,8 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import type {User} from "./types/User";
+
 // SECTION26: コンポーネント指向
-import {CToggle} from "./CompToggle";
+import {CToggle} from "./components/CompToggle";
 
 // SECTION17: NameInputコンポーネント
 //{
@@ -30,6 +32,9 @@ const ListItems = () => {
   // mapで生成する要素にはkey属性を入れないとワーニング
   const items = numbers.map((item) => 
     <li key={item.toString()}>{item}</li>);
+
+  const user1:User ={id:50, name:"hime"};
+  user1.id = 10;
 
     return <ul>{items}</ul>;
 }

@@ -37,3 +37,13 @@
 3) build & run
   ./node_modules/.bin/tsc
   node ./src/index.js
+
+[react-typescript]
+1) new project
+  npx create-react-app react-app2 --template typescript
+
+2) build & run
+  npm start
+
+3) code check
+  npx eslint . --ext ts,tsx
