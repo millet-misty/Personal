@@ -1,17 +1,26 @@
+import 'react-native-gesture-handler';
 import React from 'react';
+import { useEffect,useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import logo from './logo.svg';
 import './App.css';
 
+// 8-4: 型定義
 import type {User} from "./types/User";
 
 // SECTION26: コンポーネント指向
 import {CToggle} from "./components/CompToggle";
 
+import type {RootStackParamList, SecondScreenProp} from "./second_page"
+import { SecondScreen } from './second_page';
+
 // SECTION17: NameInputコンポーネント
 //{
   const NameInput = () => {
       // stateの管理(変数,変更関数名)
-      const [name, setName] = React.useState("○○");
+      const [name, setName] = useState("○○");
       // イベントハンドラ
       const handleOnChange = (event: { target: { value: React.SetStateAction<string>; }; }) => setName(event.target.value);
 
@@ -42,7 +51,7 @@ const ListItems = () => {
 // SECTION 24:セレクトボックス
 const InputSelectBox = () => {
   // 状態(変数,変更関数名)
-  const [selectedValue, setSelectedValue] = React.useState("HTML");
+  const [selectedValue, setSelectedValue] = useState("HTML");
   // イベントハンドラ
   const handleChenge = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedValue(e.target.value);
@@ -91,25 +100,45 @@ const InputRadio = ()=>{
   );
 }
 
-// MAIN App
-function App() {
+function HomeScreen() {
   // トグルのやつ
   const [isLoggedIn, setIsLoggedInState] = React.useState(false);  // 状態(変数,変更関数名)
   const toggleIsLoggedIn = () => setIsLoggedInState(!isLoggedIn);  // イベントハンドラ
 
+  // 4-7: useEffect
+  useEffect(() => {alert();}, [isLoggedIn]);    // isLoggedInが書き換わったらアラートを出す
+
+  const navigation = useNavigation<SecondScreenProp>();   // Typescriptでは型パラメータが必要
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      <InputRadio />
-      <CToggle isLoggedIn={isLoggedIn} toggleIsLoggedIn={toggleIsLoggedIn} />
-      <p/>
-      <NameInput />
-      <InputSelectBox />
-      <p/>
-      <ListItems />
-      </header>
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+    <InputRadio />
+    <button onClick={() => navigation.navigate('Second')}>Go to Second Screen</button>
+    <p/>
+    <CToggle isLoggedIn={isLoggedIn} toggleIsLoggedIn={toggleIsLoggedIn} />
+    <p/>
+    <NameInput />
+    <InputSelectBox />
+    <p/>
+    <ListItems />
+    </header>
     </div>
+  );
+}
+
+const Stack = createStackNavigator<RootStackParamList>();
+
+// MAIN App
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Second" component={SecondScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
   /*
   return (

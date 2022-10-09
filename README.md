@@ -47,3 +47,13 @@
 
 3) code check
   npx eslint . --ext ts,tsx
+
+[screen transition]
+  npm install @react-navigation/native
+  npm install -g expo-cli
+  expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+  npm install @react-navigation/stack
+
+  # Can't resolve 'react-native' in '\node_modules\@react-navigation\elements\lib\module'
+  
